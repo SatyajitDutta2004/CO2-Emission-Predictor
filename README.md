@@ -31,6 +31,41 @@ This project now features a beautiful, modern, and responsive web interface:
 
 Note : If project doesnrt work on your sytem or If you get any errors. Let me know will help you.
 
+## Support
+
+For questions or support:
+
+Email: satyajitdutta327@gmail.com
+GitHub: @SatyajitDutta2004
+LinkedIn: linkedin.com/in/satyajit-dutta
+
+## 🎯 Key Features
+
+Google/Microsoft-Style Design
+Glass Morphism: Modern glass effects
+Professional Typography: Inter font family
+Smooth Animations: Micro-interactions
+Modern Layout: Clean, organized sections
+Color Scheme: Professional color palette
+Interactive Elements
+Hover Effects: Card transformations
+Smooth Transitions: All interactive elements
+Active States: Navigation highlighting
+Loading Animations: Skill progress bars
+Mobile Optimization
+Responsive Design: Mobile-first approach
+Touch Friendly: Large tap targets
+Optimized Layout: Works on all screen sizes
+
+## 🚀 Future Enhancements
+
+Blog section integration
+Advanced analytics
+CMS integration for easy updates
+PWA features (offline support)
+Advanced animations with GSAP
+Multi-language support
+
 ## Want Project files ?
 
 **You Can use this Beautiful Project for your college Project and get good marks too.**
