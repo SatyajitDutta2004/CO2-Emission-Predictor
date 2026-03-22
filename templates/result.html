@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CO2 Emission Prediction Result - EcoPredictor</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .result-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin: 2rem auto;
+        max-width: 800px;
+      }
+      .header-section {
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+      }
+      .header-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>')
+          no-repeat center;
+        background-size: 200px;
+        opacity: 0.3;
+      }
+      .header-content {
+        position: relative;
+        z-index: 1;
+      }
+      .result-section {
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+      .result-display {
+        background: linear-gradient(135deg, #fff, #f8f9fa);
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 2rem 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 3px solid #4caf50;
+        position: relative;
+        overflow: hidden;
+      }
+      .result-display::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(76, 175, 80, 0.1) 0%,
+          transparent 70%
+        );
+        animation: pulse 3s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      .result-value {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 1rem 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
+      }
+      .result-unit {
+        font-size: 1.5rem;
+        color: #6c757d;
+        font-weight: 500;
+      }
+      .result-icon {
+        font-size: 4rem;
+        color: #4caf50;
+        margin-bottom: 1rem;
+      }
+      .eco-message {
+        background: #e8f5e8;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-left: 4px solid #4caf50;
+      }
+      .eco-message h5 {
+        color: #2e7d32;
+        margin-bottom: 0.5rem;
+      }
+      .btn-back {
+        background: linear-gradient(135deg, #2196f3, #1976d2);
+        border: none;
+        border-radius: 50px;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        display: inline-block;
+      }
+      .btn-back:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        background: linear-gradient(135deg, #1976d2, #2196f3);
+        color: white;
+        text-decoration: none;
+      }
+      .insights-section {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-top: 2rem;
+      }
+      .insight-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+      .insight-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #4caf50;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 1.2rem;
+      }
+      @media (max-width: 768px) {
+        .result-container {
+          margin: 1rem;
+        }
+        .header-section {
+          padding: 1.5rem 1rem;
+        }
+        .result-section {
+          padding: 2rem 1rem;
+        }
+        .result-value {
+          font-size: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="result-container">
+        <div class="header-section">
+          <div class="header-content">
+            <i class="fas fa-chart-line result-icon"></i>
+            <h1 class="display-5 fw-bold mb-2">Prediction Result</h1>
+            <p class="mb-0">Your CO2 Emission Analysis</p>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <div class="result-display">
+            <div class="result-content">
+              <i class="fas fa-cloud result-icon"></i>
+              <div class="result-value">{{ EMI }}</div>
+              <div class="result-unit">g/km CO2</div>
+            </div>
+          </div>
+
+          <div class="eco-message">
+            <h5>
+              <i class="fas fa-lightbulb me-2"></i>Environmental Impact Insight
+            </h5>
+            <p class="mb-0">
+              {% if EMI < 120 %} Excellent! This vehicle has low CO2 emissions.
+              Consider it for eco-friendly driving. {% elif EMI < 180 %} Good
+              performance. This falls within average emission levels for modern
+              vehicles. {% elif EMI < 250 %} Moderate emissions. Consider
+              fuel-efficient alternatives or electric options. {% else %} High
+              emissions detected. This vehicle may contribute significantly to
+              carbon footprint. {% endif %}
+            </p>
+          </div>
+
+          <div class="insights-section">
+            <h4 class="text-center mb-4">Quick Insights</h4>
+            <div class="insight-item">
+              <div class="insight-icon">
+                <i class="fas fa-gas-pump"></i>
+              </div>
+              <div>
+                <strong>Fuel Efficiency:</strong>
+                {% if EMI < 150 %} High efficiency vehicle {% elif EMI < 200 %}
+                Moderate efficiency {% else %} Consider fuel-saving options {%
+                endif %}
+              </div>
+            </div>
+            <div class="insight-item">
+              <div class="insight-icon">
+                <i class="fas fa-leaf"></i>
+              </div>
+              <div>
+                <strong>Environmental Rating:</strong>
+                {% if EMI < 120 %} 🌱 Eco-Friendly {% elif EMI < 180 %} ✅
+                Average {% else %} ⚠️ High Impact {% endif %}
+              </div>
+            </div>
+            <div class="insight-item">
+              <div class="insight-icon">
+                <i class="fas fa-euro-sign"></i>
+              </div>
+              <div>
+                <strong>Cost Indicator:</strong>
+                {% if EMI < 150 %} Potentially lower fuel costs {% else %}
+                Higher operating costs expected {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <a href="/" class="btn-back">
+              <i class="fas fa-arrow-left me-2"></i>
+              Make Another Prediction
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Animate result display
+        const resultDisplay = document.querySelector('.result-display');
+        resultDisplay.classList.add('animate__animated', 'animate__zoomIn');
+
+        // Animate insight items with delay
+        const insightItems = document.querySelectorAll('.insight-item');
+        insightItems.forEach((item, index) => {
+          item.style.opacity = '0';
+          item.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            item.style.transition = 'all 0.6s ease';
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+          }, index * 200);
+        });
+
+        // Add counter animation to the result value
+        const resultValue = document.querySelector('.result-value');
+        const targetValue = parseFloat(resultValue.textContent);
+        let currentValue = 0;
+        const increment = targetValue / 50;
+        const timer = setInterval(() => {
+          currentValue += increment;
+          if (currentValue >= targetValue) {
+            currentValue = targetValue;
+            clearInterval(timer);
+          }
+          resultValue.textContent = Math.round(currentValue);
+        }, 30);
+
+        // Add click effect to back button
+        const backBtn = document.querySelector('.btn-back');
+        backBtn.addEventListener('click', function() {
+          this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Redirecting...';
+        });
+
+        // Add environmental tips based on emission level
+        const emissionValue = {{ EMI }};
+        const tipsContainer = document.createElement('div');
+        tipsContainer.className = 'eco-message animate__animated animate__fadeInUp';
+        tipsContainer.style.marginTop = '2rem';
+
+        let tipsContent = '<h5><i class="fas fa-lightbulb me-2"></i>Environmental Tips</h5>';
+        if (emissionValue < 120) {
+          tipsContent += '<p>Great choice! Continue supporting eco-friendly transportation options.</p>';
+        } else if (emissionValue < 180) {
+          tipsContent += '<p>Consider carpooling, public transport, or electric vehicle options for even better environmental impact.</p>';
+        } else {
+          tipsContent += '<p>High emissions detected. Consider switching to hybrid/electric vehicles, biking, or public transportation to reduce your carbon footprint.</p>';
+        }
+
+        tipsContainer.innerHTML = tipsContent;
+        document.querySelector('.insights-section').appendChild(tipsContainer);
+      });
+    </script>
+  </body>
+</html>
